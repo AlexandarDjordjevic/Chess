@@ -64,7 +64,7 @@ Position::Position(const std::string& input) {
 }
 
 Position::Position(uint8_t x, uint8_t y) {
-    if (!is_coord_valid(x) || !is_coord_valid) {
+    if (!is_coord_valid(x) || !is_coord_valid(y)) {
         throw std::invalid_argument("Invalid input position");
     }
     m_x = x;
