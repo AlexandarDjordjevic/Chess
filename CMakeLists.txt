@@ -5,6 +5,18 @@ project(Chess CXX)
 set(target chess)
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "-fPIE")
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CodeCoverage.cmake)
+
+APPEND_COVERAGE_COMPILER_FLAGS()
+
+option(ENABLE_SANITIZERS "This will enable address and leak sanitizers" FALSE)
+
+if (ENABLE_SANITIZERS)
+    message ("-- INFO: Sanitizers are enabled")
+    set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS}"-fsanitize=leak,address")
+endif()
 
 set(
     source
