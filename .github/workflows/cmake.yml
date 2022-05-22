@@ -30,13 +30,17 @@ jobs:
 
     - name: Build
       # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build 
+      run: cmake --build ${{github.workspace}}/build
 
     - name: Test
       working-directory: ${{github.workspace}}/build/tests
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ./chess_tests
+      
+    - name: List files
+      working-directory: ${{github.workspace}}/build/tests
+      run: ls -la
     
     - name: Codecov
       uses: codecov/codecov-action@v3.1.0
