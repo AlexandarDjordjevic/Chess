@@ -5,8 +5,6 @@
 
 namespace chess {
 
-class APiece;
-
 Board::Board(const std::shared_ptr<ABoard_initializer>& board_initializer)
     : m_board_initializer{board_initializer ? board_initializer
                                             : std::make_shared<Default_board_initializer>()} {
@@ -35,11 +33,11 @@ std::shared_ptr<APiece> Board::operator[](const Position& position) const {
 void Board::move_piece(const Move& move) {
     auto piece{(*this)[*move.start]};
     if (piece == nullptr) {
-        throw exceptions::Invalid_move();
+        throw exceptions::Invalid_field(to_string(*move.start));
     }
 
     if (piece->get_color() != move.piece_color) {
-        throw exceptions::Wrong_piece_selected();
+        throw exceptions::Wrong_piece_selected(to_string(move.piece_color));
     }
 
     if (move.start == move.end) {
@@ -47,12 +45,16 @@ void Board::move_piece(const Move& move) {
     }
 
     if (!piece->is_valid_move(move, *this)) {
-        throw exceptions::Invalid_move();
+        throw exceptions::Invalid_move(to_string(move));
     }
 
     m_fields[move.end->get_x()][move.end->get_y()] =
       m_fields[move.start->get_x()][move.start->get_y()];
     m_fields[move.start->get_x()][move.start->get_y()].reset();
+
+    //    m_artist->draw_field(move.start);
+    //    m_artist->draw_field(move.end);
+    //    m_artist->draw_piece(move.end, )
 }
 
 } // namespace chess

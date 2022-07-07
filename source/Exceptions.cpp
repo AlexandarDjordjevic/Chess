@@ -9,18 +9,22 @@ const std::string k_color_red{"\x1B[31m"};
 
 namespace chess::exceptions {
 
-Invalid_move::Invalid_move() noexcept = default;
-Invalid_move::Invalid_move(const std::string& msg) noexcept : m_message{msg} {
-    m_message = k_color_red + "[Error]: Invalid move. " + msg + k_color_reset;
-}
+Invalid_move::Invalid_move() noexcept
+    : m_message{k_color_red + "[Error]: Invalid move: " + k_color_reset} {}
+
+Invalid_move::Invalid_move(const std::string& msg) noexcept
+    : m_message{k_color_red + "[Error]: Invalid move: " + msg + k_color_reset} {}
+
 const char* Invalid_move::what() const noexcept { return m_message.c_str(); }
 
-Empty_field_selected::Empty_field_selected() noexcept = default;
-Empty_field_selected::Empty_field_selected(const std::string& msg) noexcept : m_message{msg} {
-    m_message = k_color_red + "[Error]: Empty field selected. " + msg + k_color_reset;
-}
+Invalid_field::Invalid_field() noexcept
+    : m_message{k_color_red + "[Error]: Empty field selected." + k_color_reset} {}
 
-const char* Empty_field_selected::what() const noexcept { return m_message.c_str(); }
+Invalid_field::Invalid_field(const Position& position) noexcept
+    : m_message{k_color_red + "[Error]: Field " + to_string(position) + " is empty."
+                + k_color_reset} {}
+
+const char* Invalid_field::what() const noexcept { return m_message.c_str(); }
 
 
 Unexpected_state::Unexpected_state() noexcept = default;

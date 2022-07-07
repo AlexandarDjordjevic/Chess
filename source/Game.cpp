@@ -22,8 +22,6 @@ constexpr auto k_black_player_position{1};
 
 namespace chess {
 
-std::string to_string(Color color) { return color == Color::white ? "White" : "Black"; }
-
 Game::Game()
     : m_players{std::make_shared<Player>(Color::white), std::make_shared<Player>(Color::black)},
       m_active_player{m_players[k_white_player_position]} {}
@@ -38,7 +36,9 @@ std::string Game::get_player_turn_color() const { return to_string(m_active_play
 
 void Game::update_game_state(const std::string& input) {
     const auto move{Move(input, m_active_player->get_color())};
+
     m_board.move_piece(move);
+    change_turn();
 }
 
 } // namespace chess

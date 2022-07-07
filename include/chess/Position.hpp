@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <array>
 
 namespace chess {
 /**
@@ -64,5 +65,10 @@ private:
      */
     uint8_t m_y;
 };
+
+[[maybe_unused]] static std::string to_string(const Position& position) {
+    std::array<char, 8> literals{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+    return std::string{literals[position.get_x()]} + std::to_string(position.get_y() + 1);
+}
 
 } // namespace chess

@@ -3,6 +3,7 @@
 #include "chess/Common.hpp"
 #include "chess/Move.hpp"
 #include "chess/Board.hpp"
+#include "chess/pieces/IPeace.hpp"
 
 #include <memory>
 #include <vector>
@@ -11,7 +12,7 @@ namespace chess {
 
 class Board;
 
-class APiece {
+class APiece : public IPiece {
 public:
     /**
      * Abstract piece class
@@ -37,13 +38,13 @@ public:
      * Get piece type
      * @return Piece type (check enum Piece_type)
      */
-    Piece_type get_type() const;
+    Piece_type get_type() const override;
 
     /*
      * Get piece piece_color
      * @return Piece piece_color (white or black)
      */
-    Color get_color() const;
+    Color get_color() const override;
 
 protected:
     /*

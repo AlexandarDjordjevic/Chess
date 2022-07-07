@@ -1,5 +1,7 @@
 #pragma once
 
+#include "chess/Position.hpp"
+
 #include <exception>
 #include <stdexcept>
 
@@ -39,26 +41,26 @@ private:
     std::string m_message;
 };
 
-class Empty_field_selected : public std::exception {
+class Invalid_field : public std::exception {
 public:
     /**
      * @brief Construct a new Exception_base object
      *
      */
-    Empty_field_selected() noexcept;
+    Invalid_field() noexcept;
 
     /**
      * @brief Construct a new Exception_base object
      *
      * @param message
      */
-    Empty_field_selected(const std::string& message) noexcept;
+    Invalid_field(const Position& position) noexcept;
 
     /**
      * @brief Destroy the Exception_base object
      *
      */
-    ~Empty_field_selected() override = default;
+    ~Invalid_field() override = default;
 
     /**
      * @brief Pointer to a string with explanatory information
