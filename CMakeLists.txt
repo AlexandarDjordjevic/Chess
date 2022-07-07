@@ -5,7 +5,7 @@ project(Chess CXX)
 set(target chess)
 
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_FLAGS "-fPIE")
+set(CMAKE_CXX_FLAGS "-fPIE -Wall -Wextra -Wpedantic -Werror")
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/CodeCoverage.cmake)
 

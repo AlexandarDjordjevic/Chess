@@ -1,5 +1,6 @@
 #include "chess/Position.hpp"
 #include <stdexcept>
+#include <iostream>
 
 namespace {
 
@@ -56,7 +57,7 @@ Position::Position(const std::string& input) {
 
 
     if (input.length() != k_position_string_size || !is_coord_valid(x) || !is_coord_valid(y)) {
-        throw std::invalid_argument("Invalid input position " + input);
+        throw std::invalid_argument("Invalid input: " + input);
     }
 
     m_x = x;

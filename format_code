@@ -14,3 +14,5 @@ def format_code(dir, ext):
 format_code("source", ".cpp")
 format_code("include", ".hpp")
 format_code("tests", ".cpp")
+format_code("application/source", ".cpp")
+format_code("application/include", ".cpp")

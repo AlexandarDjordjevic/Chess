@@ -37,7 +37,7 @@ bool Movement_validators::is_valid_diagonal_move(const Move& move, const Board& 
 
 std::tuple<uint8_t, uint8_t> Movement_validators::get_start_and_end_positions(uint8_t start,
                                                                               uint8_t end) {
-    return (start > end) ? std::pair<int, int>{end, start - 1}
+    return (start > end) ? std::pair<int, int>{end + 1, start}
                          : std::pair<int, int>{start + 1, end};
 }
 
@@ -46,16 +46,12 @@ bool Movement_validators::is_valid_vertical_move(const Move& move, const Board& 
     if (move.start->get_x() != move.end->get_x()) {
         return false;
     }
+
     const auto x{move.start->get_x()};
     uint8_t y_start{0};
     uint8_t y_end{0};
 
     std::tie(y_start, y_end) = get_start_and_end_positions(move.start->get_y(), move.end->get_y());
-
-    // check if destination contains figure with same piece_color
-    if (board[{x, y_end}] && board[{x, y_end}]->get_color() == move.piece_color) {
-        return false;
-    }
 
     for (auto y{y_start}; y < y_end; ++y) {
         if (board[{x, y}]) {
@@ -69,16 +65,12 @@ bool Movement_validators::is_valid_horizontal_move(const Move& move, const Board
     if (move.start->get_y() != move.end->get_y()) {
         return false;
     }
+
     const auto y{move.start->get_y()};
     uint8_t x_start{0};
     uint8_t x_end{0};
 
     std::tie(x_start, x_end) = get_start_and_end_positions(move.start->get_x(), move.end->get_x());
-
-    // check if destination contains figure with same piece_color
-    if (board[{x_end, y}] && board[{x_end, y}]->get_color() == move.piece_color) {
-        return false;
-    }
 
     for (auto x{x_start}; x < x_end; ++x) {
         if (board[{x, y}]) {

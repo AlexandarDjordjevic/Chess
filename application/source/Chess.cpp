@@ -1,4 +1,4 @@
-#include "Chess.hpp"
+#include "../include/Chess.hpp"
 #include "chess/Exceptions.hpp"
 
 #include <chrono>
@@ -8,13 +8,13 @@
 
 namespace chess {
 
-Chess::Chess() : m_game{std::make_unique<Game>()},m_running{true} {
+Chess::Chess() : m_running{true}, m_game{std::make_unique<Game>()} {
     m_command_list.emplace("quit", &Chess::quit);
     m_command_list.emplace("restart", &Chess::restart);
     m_command_list.emplace("resign", &Chess::resign);
 }
 
-void Chess::run(){
+void Chess::run() {
     m_thread = std::thread([&]() {
         while (m_running) {
             handle_input();
@@ -32,11 +32,9 @@ void Chess::handle_input() {
     if (m_command_list.contains(input)) {
         (this->*m_command_list[input])();
     } else {
-        try{
+        try {
             m_game->update_game_state(input);
-        }catch (const std::exception& e){
-            std::cout << e.what() << std::endl;
-        }
+        } catch (const std::exception& e) { std::cout << e.what() << std::endl; }
     }
 }
 
@@ -45,9 +43,7 @@ void Chess::resign() {
     m_running = false;
 }
 
-void Chess::restart() {
-    m_game.reset();
-}
+void Chess::restart() { m_game.reset(); }
 
 void Chess::quit() {
     std::cout << "[Game over!]" << std::endl;
